@@ -5,7 +5,7 @@ export async function GET(request: Request) {
 
   await prisma.todo.deleteMany(); // delete * from todo
 
-  await prisma.todo.createMany({
+  const todo=await prisma.todo.createMany({
     data: [
       { description: 'Piedra del alma', complete: true },
       { description: 'Piedra del poder' },
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
       { description: 'Piedra del realidad' },
     ]
   })
- 
+ console.log(todo)
   
 
   return NextResponse.json({ message: 'Seed Executed' });
