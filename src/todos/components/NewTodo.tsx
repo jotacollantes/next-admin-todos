@@ -19,12 +19,14 @@ export const NewTodo = () => {
   const onSubmit = async( e: FormEvent ) => {
     e.preventDefault();
     if ( description.trim().length === 0 ) return;
-
+    // todosApi.createTodo(description);
     await addTodo(description);
     setDescription('');
     // router.refresh();
   }
   
+
+  //! Para eliminar los todos completados pero en el server component => Client Component. el metodo  todosApi.deleteCompletedTodos se encuentra en ../actions/todo-actions
   // const deleteCompleted = async() => {
     // await todosApi.deleteCompletedTodos();
     // router.refresh();

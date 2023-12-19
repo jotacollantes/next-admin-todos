@@ -19,6 +19,8 @@ export const TodosGrid = ({ todos = [] }: Props) => {
   const router = useRouter();
 
   
+
+  //! Esta es la funcion en caso de que se ejecute en modo Server Component => Client Component
   // const toggleTodo = async(id: string, complete: boolean) => {
   //   const updatedTodo = await todosApi.updateTodo( id, complete );
   //   console.log({updatedTodo});
@@ -31,6 +33,7 @@ export const TodosGrid = ({ todos = [] }: Props) => {
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
       {
         todos.map( todo => (
+          //!Enviamos la funcion toogleTodo que es un action directamente como prop
           <TodoItem key={ todo.id } todo={ todo } toggleTodo={ toggleTodo }  />
         ))
       }
