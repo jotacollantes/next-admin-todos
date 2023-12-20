@@ -33,7 +33,9 @@ const getProductsInCart = ( cart: { [id:string]: number } ): ProductInCart[] => 
 export default function CartPage() {
 
   const cookiesStore = cookies();
-  const cart = JSON.parse( cookiesStore.get('cart')?.value ?? '{}' ) as { [id:string]: number };
+  //Hago el tipado del array de objetos con:  as { [id:string]: number }
+  //const cart = JSON.parse( cookiesStore.get('cart')?.value ?? '{}' ) as { [id:string]: number };
+  const cart = JSON.parse( cookiesStore.get('cart')?.value as string ) ?? {} as { [id:string]: number };
   const productsInCart = getProductsInCart(cart);
 
   const totalToPay = productsInCart.reduce( 

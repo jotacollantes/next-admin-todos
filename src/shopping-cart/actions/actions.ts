@@ -13,7 +13,8 @@ import { getCookie, hasCookie, setCookie } from "cookies-next";
 export const getCookieCart = ():{ [id: string]:number } => {
 
   if ( hasCookie('cart') ) {
-    const cookieCart = JSON.parse( getCookie('cart') as string ?? '{}' );
+    //const cookieCart = JSON.parse( getCookie('cart') as string ?? '{}' );
+    const cookieCart = JSON.parse( getCookie('cart') as string  ) ?? {} ;
     return cookieCart;
   }
 
@@ -23,13 +24,14 @@ export const getCookieCart = ():{ [id: string]:number } => {
 export const addProductToCart = ( id: string ) => {
 
   const cookieCart = getCookieCart();
-
+  // si existe la cookie con el id, acumulamos el valor de la cooki econ ese id + 1
   if ( cookieCart[id] ) {
     cookieCart[id] = cookieCart[id] + 1;
   } else {
+    //
     cookieCart[id] = 1;
   }
-
+  // Grabamos en la cookie
   setCookie('cart', JSON.stringify(cookieCart));
 }
 

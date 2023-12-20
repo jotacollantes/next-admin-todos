@@ -5,8 +5,9 @@ import { CiSearch, CiMenuBurger, CiChat1, CiBellOn, CiShoppingBasket } from 'rea
 
 const getTotalCount = (cart: { [id: string]: number }):number => {
   let items = 0;
-  Object.values( cart ).forEach( (value) => {
-    items += value as number;
+  Object.values( cart ).forEach( (value:number) => {
+    //items += value as number;
+    items += value ;
   })
 
   return items;
@@ -17,7 +18,7 @@ export const TopMenu = () => {
 
   const cookieStore = cookies();
   const cart = JSON.parse( cookieStore.get('cart')?.value ?? '{}' );
-
+  //const cart =JSON.parse(cookieStore.get('cart')?.value as string) ?? {}
   const totalItems = getTotalCount(cart);
 
   
