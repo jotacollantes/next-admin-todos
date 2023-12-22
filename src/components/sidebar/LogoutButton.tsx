@@ -6,7 +6,7 @@ import { IoShieldOutline } from "react-icons/io5";
 
 
 export const LogoutButton = () => {
-
+//Ocupamos la sesion del usuario
   const { data: session, status } = useSession();
 
   if ( status === 'loading' ) {

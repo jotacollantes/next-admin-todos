@@ -45,7 +45,7 @@ const menuItems = [
 
 
 export const Sidebar = async() => {
-
+  //*Para tomar la informacion del cliente conectado ejecutamos la funcion de getServerSession y le enviamos como argumento el objeto authOptions: NextAuthOptions que esta en /api/auth/[...nextauth]/route
   const session = await getServerSession(authOptions);
 
   const avatarUrl = ( session?.user?.image )

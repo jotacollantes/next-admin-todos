@@ -4,9 +4,11 @@ import bcrypt from 'bcryptjs';
 
 export async function GET(request: Request) { 
 
+  //Primero se borran los hijos
   await prisma.todo.deleteMany(); // delete * from todo
   await prisma.user.deleteMany(); // delete * from todo
 
+  // Puedo crear los todos dentro de user porque ya existe la relacion
   const user = await prisma.user.create({
     data: {
       email: 'test1@google.com',

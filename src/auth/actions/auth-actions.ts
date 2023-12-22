@@ -15,18 +15,18 @@ export const getUserSessionServer = async() => {
 export const signInEmailPassword = async( email: string, password: string ) => {
 
   if ( !email || !password ) return null;
-
+  //*Busco el usuario en la BD
   const user = await prisma.user.findUnique({ where: { email } });
-
+  //*Si el usuario no existe se lo crea 
   if ( !user ) {
     const dbUser = await createUser( email, password );
     return dbUser;
   }
-
+  //*Si el usuario existe se verifica las contrasenas
   if ( !bcrypt.compareSync( password, user.password ?? '') ) {
     return null;
   }
-
+  //* El usuario existe y fue verificado
   return user;
 }
 

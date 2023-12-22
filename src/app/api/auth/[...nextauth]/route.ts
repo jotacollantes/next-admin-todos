@@ -35,6 +35,7 @@ export const authOptions:NextAuthOptions = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
+        //const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
         const user = await signInEmailPassword(credentials!.email, credentials!.password );
   
         if (user) {
@@ -53,7 +54,7 @@ export const authOptions:NextAuthOptions = {
   },
 
   callbacks: {
-
+  //* Los callbacks se ejecutan en secuencial
     async signIn({ user, account, profile, email, credentials }) {
       // console.log({user});
       return true;
@@ -61,11 +62,13 @@ export const authOptions:NextAuthOptions = {
 
     async jwt({ token, user, account, profile }) {
       // console.log({ token });
+      //*Con sultamos el usuario en la BD, usamos el token.email
       const dbUser = await prisma.user.findUnique({ where: { email: token.email ?? 'no-email' } });
       if ( dbUser?.isActive === false ) {
         throw Error('Usuario no está activo');
       }
-
+      //* Modificamos el Token
+      //*en este punto puede ser necesario que se necesite modificar el archivo nextauth.d.ts para anadir nuevas proiedades
       token.roles = dbUser?.roles ?? ['no-roles'];
       token.id    = dbUser?.id ?? 'no-uuid';
 
@@ -73,7 +76,8 @@ export const authOptions:NextAuthOptions = {
     },
 
     async session({ session, token, user }) {
-      
+      //*Modificamos los datos de la sesion para incluir los nuevos campos de roles y id
+      //*Validamos si existe una sesion y un user
       if ( session && session.user ) {
         session.user.roles = token.roles;
         session.user.id = token.id;

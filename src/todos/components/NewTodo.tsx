@@ -6,20 +6,27 @@ import { IoTrashOutline } from 'react-icons/io5';
 import * as todosApi from '@/todos/helpers/todos';
 import { createTodo, deleteCompleted } from '@/todos/actions/todo-actions';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 
 export const NewTodo = () => {
-
+  const { data: session, status } = useSession();
+  //console.log('data', JSON.stringify(session, null, 2))
+  const userId=session?.user?.id
+  //console.log({userId})
   const router = useRouter();
   const [description, setDescription] = useState('');
 
   const onSubmit = async( e: FormEvent ) => {
     e.preventDefault();
     if ( description.trim().length === 0 ) return;
-
-    // await createTodo(description, user.id);
-    await todosApi.createTodo(description);
-    router.refresh();
+    //! createTodo pero por server Action hay que enviar el user.id
+    await createTodo(description, userId!);
+    
+    //! createTodo pero por API-rest no hay que enviar el user.id porque ya viaja en el post y en el end point llamamos a la sesion getUserSessionServer()
+    
+    //await todosApi.createTodo(description);
+    //router.refresh();
 
     setDescription('');
   }

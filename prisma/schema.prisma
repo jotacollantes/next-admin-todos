@@ -16,13 +16,15 @@ model Todo {
   complete    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
+  //*Aqui se define la relacion Todo => User
+  //Relacion uno a uno por eso User no se define como arreglo
   user   User   @relation(fields: [userId], references: [id])
   userId String
 }
 
 // Auth.js
 model Account {
+  //id                       String  @id @default(cuid())
   id                       String  @id @default(uuid())
   userId                   String
   type                     String
@@ -43,6 +45,7 @@ model Account {
 }
 
 model Session {
+  //id                       String  @id @default(cuid())
   id           String   @id @default(uuid())
   sessionToken String   @unique
   userId       String
@@ -51,6 +54,7 @@ model Session {
 }
 
 model User {
+  //id                       String  @id @default(cuid())
   id            String    @id @default(uuid())
   name          String?
   password      String?
@@ -62,7 +66,8 @@ model User {
 
   accounts Account[]
   sessions Session[]
-
+  //Aqui defino la relacion uno a muchos User => Todo
+  //Esto no es un campo
   todos Todo[]
 }
 

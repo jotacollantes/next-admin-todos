@@ -1,5 +1,4 @@
 export const dynamic = 'force-dynamic';
-
 import { getUserSessionServer } from "@/auth/actions/auth-actions";
 import prisma from "@/lib/prisma";
 import { NewTodo, TodosGrid } from "@/todos";

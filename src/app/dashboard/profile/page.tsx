@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect } from "react";
+//* use session debe de estar envuelto en <SessionProvider>
 import { useSession } from 'next-auth/react';
 
 export default function ProfilePage() {
-
+//* Para tomar el dato de la session del usuario usamos el hook useSession()
   const { data: session } = useSession();
 
 
